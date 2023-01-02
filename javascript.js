@@ -18,11 +18,15 @@ function capitalize(str) {
 }
 
 function lowercaseAndCapitalize(str) {
+  if (str === null || str === undefined) {
+    return;
+  }
   return capitalize(str.toLowerCase());
 }
 
 function playRound(playerSelection, computerSelection) {
   playerSelection = lowercaseAndCapitalize(playerSelection);
+  let declaration = "";
   if (
     !(
       playerSelection === "Rock" ||
@@ -30,12 +34,9 @@ function playRound(playerSelection, computerSelection) {
       playerSelection === "Scissors"
     )
   ) {
-    console.log(
-      "Bad input. Pleae enter either 'Rock', 'Paper', or 'Scissors'. Input is not case sensitive."
-    );
-    return;
+    declaration = "Bad input! Pleae enter either 'Rock', 'Paper', or 'Scissors'. Input is not case sensitive.";
+    return declaration;
   }
-  let declaration = "";
 
   if (playerSelection === computerSelection) {
     declaration = `It's a Tie! You both chose ${playerSelection}`;
@@ -45,15 +46,47 @@ function playRound(playerSelection, computerSelection) {
     (playerSelection === "Paper" && computerSelection === "Rock")
   ) {
     declaration = `You Win! ${playerSelection} beats ${computerSelection}`;
-  }
-  else {
+  } else {
     declaration = `You Lose! ${computerSelection} beats ${playerSelection}`;
   }
 
   return declaration;
 }
 
-const playerSelection = prompt("choose");
-const computerSelection = getComputerChoice();
+function assessResult(result) {
+  let splitResult = result.split("!");
+  if (splitResult[0] === "You Win") {
+    return 0;
+  } else if (splitResult[0] === "You Lose") {
+    return 1;
+  } else if (splitResult[0] === "It's a Tie") {
+    return 2;
+  } else {
+    return 3;
+  }
+}
 
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+  let wins = 0,
+    losses = 0,
+    ties = 0;
+
+  for (let i = 0; i < 5; i++) {
+    playerSelection = prompt("Choose from rock, paper, or scissors!");
+    computerSelection = getComputerChoice();
+    let result = playRound(playerSelection, computerSelection);
+    let enumeratedResult = assessResult(result);
+    if (enumeratedResult === 0) {
+      wins++;
+    } else if (enumeratedResult === 1) {
+      losses++;
+    } else if (enumeratedResult === 2){
+      ties++;
+    } 
+
+    console.log(result);
+    console.log(`Wins: ${wins}, Losses: ${losses}, Ties: ${ties}`);
+  }
+}
+
+game();
