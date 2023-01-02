@@ -34,7 +34,8 @@ function playRound(playerSelection, computerSelection) {
       playerSelection === "Scissors"
     )
   ) {
-    declaration = "Bad input! Pleae enter either 'Rock', 'Paper', or 'Scissors'. Input is not case sensitive.";
+    declaration =
+      "Bad input! Pleae enter either 'Rock', 'Paper', or 'Scissors'. Input is not case sensitive.";
     return declaration;
   }
 
@@ -80,12 +81,20 @@ function game() {
       wins++;
     } else if (enumeratedResult === 1) {
       losses++;
-    } else if (enumeratedResult === 2){
+    } else if (enumeratedResult === 2) {
       ties++;
-    } 
+    }
 
     console.log(result);
     console.log(`Wins: ${wins}, Losses: ${losses}, Ties: ${ties}`);
+  }
+
+  if (wins > losses) {
+    console.log("You Win the 5 round game! Congratulations");
+  } else if (wins < losses) {
+    console.log("You Lose the 5 round game! Maybe next time");
+  } else {
+    console.log("You finish the 5 round game with a tie...");
   }
 }
 
