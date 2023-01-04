@@ -4,20 +4,25 @@
 html {
   font-family: "Roboto", sans-serif;
   text-align: center;
+  color: #2f4858;
 }
 
 body {
   margin: 0;
   padding: 64px;
+  background-color: #fdfdfd;
 }
 
 .main {
-    max-width: 1140px;
-    margin: 0 auto;
+  max-width: 1140px;
+  margin: 0 auto;
 }
 
-h1, h2, h3, p {
-    margin: 0;
+h1,
+h2,
+h3,
+p {
+  margin: 0;
 }
 
 h1 {
@@ -25,32 +30,52 @@ h1 {
 }
 
 .section {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .score {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .active-round {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .player-choices {
-    text-align: center;
+  text-align: center;
 }
 
 .button-container {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.choice-img {
+  width: 160px;
+  height: 160px;
+}
+
+.rock-img {
+  background-image: url(./rock.png);
+  background-size: cover;
+}
+
+.paper-img {
+  background-image: url(./paper.png);
+  background-size: cover;
+}
+
+.scissors-img {
+  background-image: url(./scissors.png);
+  background-size: cover;
 }
 
 .testimonial-container {
-    display: flex;
+  display: flex;
 }
 
 .testimonial {
-    flex: 1;
+  flex: 1;
 }
