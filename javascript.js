@@ -1,3 +1,10 @@
+const ROCK = 0;
+const PAPER = 1;
+const SCISSORS = 2;
+const WIN = 3;
+const LOSE = 4;
+const TIE = 5;
+
 function getComputerChoice() {
   let choiceNum = Math.floor(Math.random() * 3);
   switch (choiceNum) {
@@ -67,10 +74,26 @@ function assessResult(result) {
   }
 }
 
-function game() {
+function initiateGame() {
+  const rock = document.querySelector(".rock-button");
+  const paper = document.querySelector(".paper-button");
+  const scissors = document.querySelector(".scissors-button");
+
+  const winsCounter = document.querySelector(".win-score");
+  const lossesCounter = document.querySelector(".lose-score");
+  const tiesCounter = document.querySelector(".tie-score");
+
   let wins = 0,
     losses = 0,
     ties = 0;
+
+  console.log(winsCounter)
+
+  winsCounter.textContent = wins;
+  lossesCounter.textContent = losses;
+  tiesCounter.textContent = ties;
+
+  return; 
 
   for (let i = 0; i < 5; i++) {
     playerSelection = prompt("Choose from rock, paper, or scissors!");
@@ -98,4 +121,7 @@ function game() {
   }
 }
 
-// game();
+const playAgain = document.querySelector('.play-again button');
+playAgain.addEventListener('click', () => initiateGame());
+
+initiateGame();
