@@ -31,8 +31,29 @@ function lowercaseAndCapitalize(str) {
   return capitalize(str.toLowerCase());
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
   playerSelection = lowercaseAndCapitalize(playerSelection);
+  computerSelection = getComputerChoice();
+
+  const yourChoice = document.querySelector(".your-choice");
+  const compChoice = document.querySelector(".comp-choice");
+  const roundResults = document.querySelector(".round-results p");
+  yourChoice.textContent = playerSelection;
+  compChoice.textContent = computerSelection;
+
+  const resultString = getResult(playerSelection, computerSelection);
+  roundResults.textContent = resultString;
+  const result = assessResult(resultString);
+  if (result === WIN) {
+    winsCounter.textContent = parseInt(winsCounter.textContent) + 1;
+  } else if (result === LOSE) {
+    lossesCounter.textContent = parseInt(lossesCounter.textContent) + 1;
+  } else if (result === TIE) {
+    tiesCounter.textContent = parseInt(tiesCounter.textContent) + 1;
+  }
+}
+
+function getResult(playerSelection, computerSelection) {
   let declaration = "";
   if (
     !(
@@ -64,11 +85,11 @@ function playRound(playerSelection, computerSelection) {
 function assessResult(result) {
   let splitResult = result.split("!");
   if (splitResult[0] === "You Win") {
-    return 0;
+    return WIN;
   } else if (splitResult[0] === "You Lose") {
-    return 1;
+    return LOSE;
   } else if (splitResult[0] === "It's a Tie") {
-    return 2;
+    return TIE;
   } else {
     return 3;
   }
@@ -79,38 +100,34 @@ function initiateGame() {
   const paper = document.querySelector(".paper-button");
   const scissors = document.querySelector(".scissors-button");
 
-  const winsCounter = document.querySelector(".win-score");
-  const lossesCounter = document.querySelector(".lose-score");
-  const tiesCounter = document.querySelector(".tie-score");
+  winsCounter.textContent = 0;
+  lossesCounter.textContent = 0;
+  tiesCounter.textContent = 0;
 
-  let wins = 0,
-    losses = 0,
-    ties = 0;
+  let maxWins = 3;
 
-  console.log(winsCounter)
+  let playerSelection = 5;
+  const playerChoices = document.querySelectorAll(
+    ".button-container div button"
+  );
+  playerChoices.forEach((button) =>
+    button.addEventListener("click", () => playRound(button.textContent))
+  );
 
-  winsCounter.textContent = wins;
-  lossesCounter.textContent = losses;
-  tiesCounter.textContent = ties;
-
-  return; 
-
-  for (let i = 0; i < 5; i++) {
-    playerSelection = prompt("Choose from rock, paper, or scissors!");
-    computerSelection = getComputerChoice();
-    let result = playRound(playerSelection, computerSelection);
-    let enumeratedResult = assessResult(result);
-    if (enumeratedResult === 0) {
-      wins++;
-    } else if (enumeratedResult === 1) {
-      losses++;
-    } else if (enumeratedResult === 2) {
-      ties++;
-    }
-
-    console.log(result);
-    console.log(`Wins: ${wins}, Losses: ${losses}, Ties: ${ties}`);
+  return;
+  computerSelection = getComputerChoice();
+  let result = playRound(playerSelection, computerSelection);
+  let enumeratedResult = assessResult(result);
+  if (enumeratedResult === 0) {
+    wins++;
+  } else if (enumeratedResult === 1) {
+    losses++;
+  } else if (enumeratedResult === 2) {
+    ties++;
   }
+
+  console.log(result);
+  console.log(`Wins: ${wins}, Losses: ${losses}, Ties: ${ties}`);
 
   if (wins > losses) {
     console.log("You Win the 5 round game! Congratulations");
@@ -121,7 +138,11 @@ function initiateGame() {
   }
 }
 
-const playAgain = document.querySelector('.play-again button');
-playAgain.addEventListener('click', () => initiateGame());
+const winsCounter = document.querySelector(".win-score");
+const lossesCounter = document.querySelector(".lose-score");
+const tiesCounter = document.querySelector(".tie-score");
+const playAgain = document.querySelector(".play-again button");
+
+playAgain.addEventListener("click", () => initiateGame());
 
 initiateGame();
