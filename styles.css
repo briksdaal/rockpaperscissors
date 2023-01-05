@@ -11,25 +11,33 @@ body {
   margin: 0;
   padding: 16px;
   background-color: #fdfdfd;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 .main {
-  max-width: 1140px;
+  display: flex;
+  width: 1140px;
+  height: 100%;
+  flex-direction: column;
   margin: 0 auto;
 }
 
-h1,
-h2,
-h3 {
+.strong-text {
+  font-weight: 900;
+}
+
+h1 {
   margin: 0 0 16px 0;
+  font-family: "Seymour One", sans-serif;
+}
+
+h3 {
+  margin: 0 0 8px 0;
 }
 
 p {
   margin: 0;
-}
-
-h1 {
-  font-family: "Seymour One", sans-serif;
 }
 
 .section {
@@ -45,7 +53,7 @@ h1 {
   margin: 0 auto;
   align-items: center;
   border-bottom: none;
-  max-width: 760px;
+  width: 760px;
   height: 40px;
   background-color: #c6ffbc;
 }
@@ -53,7 +61,7 @@ h1 {
 .active-round {
   display: flex;
   justify-content: space-evenly;
-  max-width: 760px;
+  width: 760px;
   background-color: #c6ffbc;
   border: 2px solid #2f4858;
   margin: 0 auto;
@@ -80,7 +88,7 @@ h1 {
 }
 
 .results {
-  max-width: 760px;
+  width: 760px;
   margin: 0 auto 16px;
   display: flex;
   justify-content: center;
@@ -93,8 +101,16 @@ h1 {
   border-top: none;
 }
 
+.results p {
+  width: 100%;
+}
+
 .player-choices {
   text-align: center;
+}
+
+.choose-wisely {
+  margin-bottom: 16px;
 }
 
 .buttons-container {
@@ -109,7 +125,11 @@ h1 {
   transition: border 0.07s;
 }
 
-.button-container:hover {
+/*     
+  border: 2px solid #2f4858;
+  box-shadow: 0 0 4px 0px; */
+
+.hover-like {
   border: 2px solid #2f4858;
   box-shadow: 0 0 4px 0px;
 }
@@ -143,6 +163,51 @@ h1 {
   transform: scaleX(-1);
 }
 
+.play-again {
+  flex: 1;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.play-again button {
+  height: 38px;
+  font-family: "Roboto", sans-serif;
+  background-color: #ffffff00;
+  border: 2px solid #2f4858;
+  border-radius: 5px;
+  font-size: 19px;
+  padding: 5px 10px;
+}
+
+.play-again button:hover {
+  animation: breath 2s linear infinite;
+  box-shadow: 0 0 4px 0px;
+  background-color: #2f4858;
+  color: #fdfdfd;
+}
+
+.hover-like-breath {
+  animation: breath 2s linear infinite;
+  box-shadow: 0 0 4px 0px;
+}
+
+@keyframes breath {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.testimonials {
+  margin: 0;
+}
+
 .testimonial-container {
   display: flex;
 }
@@ -153,4 +218,5 @@ h1 {
 .testimonial-content {
   font-style: italic;
   font-size: 18px;
+  margin: 0 0 8px 0;
 }

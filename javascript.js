@@ -131,8 +131,10 @@ function updateScores() {
 }
 
 function resetText() {
-  const roundResults2 = document.querySelector(".results p");
-  roundResults2.textContent = "Rock, paper, or scissors...";
+  const roundResults = document.querySelector(".results p");
+  roundResults.textContent = "Rock, paper, or scissors...";
+  roundResults.classList.remove("strong-text");
+  playAgain.classList.remove("hover-like-breath");
 }
 
 function resetImages() {
@@ -147,12 +149,12 @@ function resetImages() {
 }
 
 function addButtonEvents() {
-  const playerChoices = document.querySelectorAll(
-    ".button-container"
-  );
+  const playerChoices = document.querySelectorAll(".button-container");
 
   playerChoices.forEach((button) => {
     button.addEventListener("click", startRound);
+    button.addEventListener("mouseenter", addHover);
+    button.addEventListener("mouseleave", removeHover);
   });
 }
 
@@ -160,13 +162,22 @@ const startRound = function (e) {
   playRound(this.lastElementChild.textContent);
 };
 
+const addHover = function (e) {
+  e.target.classList.add("hover-like");
+};
+
+const removeHover = function (e) {
+  e.target.classList.remove("hover-like");
+};
+
 function clearButtonEvents() {
-  const playerChoices = document.querySelectorAll(
-    ".button-container"
-  );
+  const playerChoices = document.querySelectorAll(".button-container");
 
   playerChoices.forEach((button) => {
     button.removeEventListener("click", startRound);
+    button.removeEventListener("mouseenter", addHover);
+    button.removeEventListener("mouseleave", removeHover);
+    button.classList.remove("hover-like");
   });
 }
 
@@ -178,6 +189,9 @@ function gameOver() {
   else if (losses === 5)
     message = `Game Over! The computer beat you ${wins} - ${losses}`;
   finalMessage.textContent = message;
+  finalMessage.classList.add("strong-text");
+
+  playAgain.classList.add("hover-like-breath");
 
   clearButtonEvents();
 }
@@ -191,6 +205,7 @@ function initiateGame() {
   resetImages();
   clearButtonEvents();
 
+  // start round on button clicks
   addButtonEvents();
 }
 
