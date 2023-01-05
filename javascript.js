@@ -55,15 +55,6 @@ function playRound(playerSelection) {
   }
 
   updateScores();
-
-  // if (winsCounter.textContent === 5 || lossesCounter.textContent === 5) {
-  //   const playerChoices = document.querySelectorAll(
-  //     ".button-container div button"
-  //   );
-  //   playerChoices.forEach((button) =>
-  //     button.removeEventListener("click", () => playRound(button.textContent))
-  //   );
-  // }
 }
 
 function setImg(imgDiv, selection) {
@@ -129,6 +120,25 @@ function updateScores() {
   winsCounter.textContent = wins;
   lossesCounter.textContent = losses;
   tiesCounter.textContent = ties;
+
+  if (wins === maxWins || losses === maxWins) {
+    console.log("game over");
+    const playerChoices = document.querySelectorAll(
+      ".button-container div button"
+    );
+    playerChoices.forEach((button) =>
+    button.removeEventListener("click", startRound)
+    );
+  }
+
+  // if (winsCounter.textContent === 5 || lossesCounter.textContent === 5) {
+  //   const playerChoices = document.querySelectorAll(
+  //     ".button-container div button"
+  //   );
+  //   playerChoices.forEach((button) =>
+  //     button.removeEventListener("click", () => playRound(button.textContent))
+  //   );
+  // }
 }
 
 function resetGame() {
@@ -139,6 +149,13 @@ function resetGame() {
     ".comp-choice-container .choice-img"
   );
   const roundResults = document.querySelector(".round-results p");
+
+  const playerChoices = document.querySelectorAll(
+    ".button-container div button"
+  );
+  playerChoices.forEach((button) =>
+    button.addEventListener("click", startRound)
+  );
 
   wins = 0;
   losses = 0;
@@ -152,6 +169,10 @@ function resetGame() {
   roundResults.textContent = "Rock, paper, or scissors... choose wisely";
 }
 
+const startRound = function (e) {
+  playRound(e.target.textContent);
+};
+
 function initiateGame() {
   const rock = document.querySelector(".rock-button");
   const paper = document.querySelector(".paper-button");
@@ -159,14 +180,7 @@ function initiateGame() {
 
   resetGame();
 
-  let maxWins = 3;
 
-  const playerChoices = document.querySelectorAll(
-    ".button-container div button"
-  );
-  playerChoices.forEach((button) =>
-    button.addEventListener("click", () => playRound(button.textContent))
-  );
 
   return;
 
@@ -188,6 +202,7 @@ function testGameOver(e) {
 }
 
 let wins, losses, ties;
+const maxWins = 5;
 
 const playAgain = document.querySelector(".play-again button");
 
