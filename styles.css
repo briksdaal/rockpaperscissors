@@ -9,7 +9,7 @@ html {
 
 body {
   margin: 0;
-  padding: 64px;
+  padding: 16px;
   background-color: #fdfdfd;
 }
 
@@ -21,7 +21,7 @@ body {
 h1,
 h2,
 h3 {
-  margin-bottom: 16px;
+  margin: 0 0 16px 0;
 }
 
 p {
@@ -37,68 +37,81 @@ h1 {
 }
 
 .score {
-    display: flex;
-    justify-content: space-evenly;
-    padding: 8px 0;
-    border-radius: 15px 15px 0 0;
-    border: 2px solid #2f4858;
-    margin: 0 auto;
-    align-items: center;
-    border-bottom: none;
-    max-width: 760px;
-    height: 40px;
-    background-color: #c6ffbc;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 8px 0;
+  border-radius: 15px 15px 0 0;
+  border: 2px solid #2f4858;
+  margin: 0 auto;
+  align-items: center;
+  border-bottom: none;
+  max-width: 760px;
+  height: 40px;
+  background-color: #c6ffbc;
 }
 
 .active-round {
-    display: flex;
-    justify-content: space-evenly;
-    max-width: 760px;
-    background-color: #c6ffbc;
-    border: 2px solid #2f4858;
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-evenly;
+  max-width: 760px;
+  background-color: #c6ffbc;
+  border: 2px solid #2f4858;
+  margin: 0 auto;
 }
-.your-choice-container, .comp-choice-container {
-    padding: 32px 0;
+.your-choice-container,
+.comp-choice-container {
+  padding: 32px 0;
 }
 
 .mid-container {
-    width: 2px;
-    background-color: #2f4858;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 2px;
+  background-color: #2f4858;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .circle {
-    flex-shrink: 0;
-    width: 50px;
-    height: 50px;
-    border: 2px solid #2f4858;
-    border-radius: 50%;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #2f4858;
+  border-radius: 50%;
 }
 
 .results {
-    max-width: 760px;
-    margin: 0 auto 16px;
-    display: flex;
-    justify-content: center;
-    height: 40px;
-    align-items: center;
-    padding: 8px 0;
-    border: 2px solid #2f4858;
-    background-color: #c6ffbc;
-    border-radius: 0 0 15px 15px;
-    border-top: none;
+  max-width: 760px;
+  margin: 0 auto 16px;
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  align-items: center;
+  padding: 8px 0;
+  border: 2px solid #2f4858;
+  background-color: #c6ffbc;
+  border-radius: 0 0 15px 15px;
+  border-top: none;
 }
 
 .player-choices {
   text-align: center;
 }
 
-.button-container {
+.buttons-container {
   display: flex;
   justify-content: space-evenly;
+}
+
+.button-container {
+  padding: 8px 16px;
+  border: 2px solid #2f485800;
+  border-radius: 15px;
+  transition: border 0.07s;
+}
+
+.button-container:hover {
+  border: 2px solid #2f4858;
+  box-shadow: 0 0 4px 0px;
 }
 
 .choice-img {
@@ -107,22 +120,22 @@ h1 {
 }
 
 .rock-img {
-  background-image: url(./rock.png);
+  background-image: url(./images_blue_border/rock.png);
   background-size: cover;
 }
 
 .paper-img {
-  background-image: url(./paper.png);
+  background-image: url(./images_blue_border/paper.png);
   background-size: cover;
 }
 
 .scissors-img {
-  background-image: url(./scissors.png);
+  background-image: url(./images_blue_border/scissors.png);
   background-size: cover;
 }
 
 .question-img {
-  background-image: url(./question.png);
+  background-image: url(./images_blue_border/question.png);
   background-size: cover;
 }
 

@@ -148,7 +148,7 @@ function resetImages() {
 
 function addButtonEvents() {
   const playerChoices = document.querySelectorAll(
-    ".button-container > div"
+    ".button-container"
   );
 
   playerChoices.forEach((button) => {
@@ -162,7 +162,7 @@ const startRound = function (e) {
 
 function clearButtonEvents() {
   const playerChoices = document.querySelectorAll(
-    ".button-container > div"
+    ".button-container"
   );
 
   playerChoices.forEach((button) => {
