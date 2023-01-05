@@ -182,7 +182,7 @@ p {
 
 .play-again button:hover {
   animation: breath 2s linear infinite;
-  box-shadow: 0 0 4px 0px;
+  box-shadow: 0 0 4px 0px #2f4858;
   background-color: #2f4858;
   color: #fdfdfd;
 }
