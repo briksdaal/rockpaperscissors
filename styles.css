@@ -72,10 +72,24 @@ h1 {
   background-size: cover;
 }
 
+.question-img {
+  background-image: url(./question.png);
+  background-size: cover;
+}
+
+.comp-choice-container .choice-img:not(.question-img) {
+  transform: scaleX(-1);
+}
+
 .testimonial-container {
   display: flex;
 }
 
 .testimonial {
-  flex: 1;
-}
+    flex: 1;
+  }
+  .testimonial-content {
+    font-style: italic;
+    font-size: 18px;
+  }
+    

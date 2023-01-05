@@ -40,16 +40,43 @@ function playRound(playerSelection) {
   const roundResults = document.querySelector(".round-results p");
   yourChoice.textContent = playerSelection;
   compChoice.textContent = computerSelection;
+  setImg(yourChoice.previousElementSibling, playerSelection);
+  setImg(compChoice.previousElementSibling, computerSelection);
 
   const resultString = getResult(playerSelection, computerSelection);
   roundResults.textContent = resultString;
   const result = assessResult(resultString);
   if (result === WIN) {
-    winsCounter.textContent = parseInt(winsCounter.textContent) + 1;
+    wins++;
   } else if (result === LOSE) {
-    lossesCounter.textContent = parseInt(lossesCounter.textContent) + 1;
+    losses++;
   } else if (result === TIE) {
-    tiesCounter.textContent = parseInt(tiesCounter.textContent) + 1;
+    ties++;
+  }
+
+  updateScores();
+
+  // if (winsCounter.textContent === 5 || lossesCounter.textContent === 5) {
+  //   const playerChoices = document.querySelectorAll(
+  //     ".button-container div button"
+  //   );
+  //   playerChoices.forEach((button) =>
+  //     button.removeEventListener("click", () => playRound(button.textContent))
+  //   );
+  // }
+}
+
+function setImg(imgDiv, selection) {
+  const classes = ["rock-img", "paper-img", "scissors-img", "question-img"];
+  imgDiv.classList.remove(...classes);
+  if (selection === "Rock") {
+    imgDiv.classList.add("rock-img");
+  } else if (selection === "Paper") {
+    imgDiv.classList.add("paper-img");
+  } else if (selection === "Scissors") {
+    imgDiv.classList.add("scissors-img");
+  } else {
+    imgDiv.classList.add("question-img");
   }
 }
 
@@ -94,19 +121,46 @@ function assessResult(result) {
     return 3;
   }
 }
+function updateScores() {
+  const winsCounter = document.querySelector(".win-score");
+  const lossesCounter = document.querySelector(".lose-score");
+  const tiesCounter = document.querySelector(".tie-score");
+
+  winsCounter.textContent = wins;
+  lossesCounter.textContent = losses;
+  tiesCounter.textContent = ties;
+}
+
+function resetGame() {
+  const playerImgDiv = document.querySelector(
+    ".your-choice-container .choice-img"
+  );
+  const compImgDiv = document.querySelector(
+    ".comp-choice-container .choice-img"
+  );
+  const roundResults = document.querySelector(".round-results p");
+
+  wins = 0;
+  losses = 0;
+  ties = 0;
+
+  updateScores();
+
+  setImg(playerImgDiv, "question-img");
+  setImg(compImgDiv, "question-img");
+
+  roundResults.textContent = "Rock, paper, or scissors... choose wisely";
+}
 
 function initiateGame() {
   const rock = document.querySelector(".rock-button");
   const paper = document.querySelector(".paper-button");
   const scissors = document.querySelector(".scissors-button");
 
-  winsCounter.textContent = 0;
-  lossesCounter.textContent = 0;
-  tiesCounter.textContent = 0;
+  resetGame();
 
   let maxWins = 3;
 
-  let playerSelection = 5;
   const playerChoices = document.querySelectorAll(
     ".button-container div button"
   );
@@ -115,16 +169,6 @@ function initiateGame() {
   );
 
   return;
-  computerSelection = getComputerChoice();
-  let result = playRound(playerSelection, computerSelection);
-  let enumeratedResult = assessResult(result);
-  if (enumeratedResult === 0) {
-    wins++;
-  } else if (enumeratedResult === 1) {
-    losses++;
-  } else if (enumeratedResult === 2) {
-    ties++;
-  }
 
   console.log(result);
   console.log(`Wins: ${wins}, Losses: ${losses}, Ties: ${ties}`);
@@ -138,11 +182,15 @@ function initiateGame() {
   }
 }
 
-const winsCounter = document.querySelector(".win-score");
-const lossesCounter = document.querySelector(".lose-score");
-const tiesCounter = document.querySelector(".tie-score");
+function testGameOver(e) {
+  console.log("what");
+  console.log(e);
+}
+
+let wins, losses, ties;
+
 const playAgain = document.querySelector(".play-again button");
 
-playAgain.addEventListener("click", () => initiateGame());
+playAgain.addEventListener("click", () => resetGame());
 
 initiateGame();
