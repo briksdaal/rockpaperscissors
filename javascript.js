@@ -1,9 +1,7 @@
-const ROCK = 0;
-const PAPER = 1;
-const SCISSORS = 2;
-const WIN = 3;
-const LOSE = 4;
-const TIE = 5;
+const WIN = 0;
+const LOSE = 1;
+const TIE = 2;
+const OTHER = 3;
 
 function getComputerChoice() {
   let choiceNum = Math.floor(Math.random() * 3);
@@ -35,17 +33,30 @@ function playRound(playerSelection) {
   playerSelection = lowercaseAndCapitalize(playerSelection);
   computerSelection = getComputerChoice();
 
+  if (
+    playerSelection !== "Rock" &&
+    playerSelection !== "Paper" &&
+    playerSelection !== "Scissors"
+  )
+    playerSelection = "???";
+
   const yourChoice = document.querySelector(".your-choice");
   const compChoice = document.querySelector(".comp-choice");
-  const roundResults = document.querySelector(".round-results p");
+  const roundResults = document.querySelector(".results p");
   yourChoice.textContent = playerSelection;
   compChoice.textContent = computerSelection;
   setImg(yourChoice.previousElementSibling, playerSelection);
   setImg(compChoice.previousElementSibling, computerSelection);
 
-  const resultString = getResult(playerSelection, computerSelection);
+  const result = assessResult(playerSelection, computerSelection);
+  const resultString = generateResultString(
+    result,
+    playerSelection,
+    computerSelection
+  );
+
   roundResults.textContent = resultString;
-  const result = assessResult(resultString);
+
   if (result === WIN) {
     wins++;
   } else if (result === LOSE) {
@@ -60,19 +71,12 @@ function playRound(playerSelection) {
 function setImg(imgDiv, selection) {
   const classes = ["rock-img", "paper-img", "scissors-img", "question-img"];
   imgDiv.classList.remove(...classes);
-  if (selection === "Rock") {
-    imgDiv.classList.add("rock-img");
-  } else if (selection === "Paper") {
-    imgDiv.classList.add("paper-img");
-  } else if (selection === "Scissors") {
-    imgDiv.classList.add("scissors-img");
-  } else {
-    imgDiv.classList.add("question-img");
-  }
+  if (selection === "???") selection = "question";
+  selection = selection.toLowerCase().concat("-img");
+  imgDiv.classList.add(selection);
 }
 
-function getResult(playerSelection, computerSelection) {
-  let declaration = "";
+function assessResult(playerSelection, computerSelection) {
   if (
     !(
       playerSelection === "Rock" ||
@@ -80,38 +84,38 @@ function getResult(playerSelection, computerSelection) {
       playerSelection === "Scissors"
     )
   ) {
-    declaration =
-      "Bad input! Pleae enter either 'Rock', 'Paper', or 'Scissors'. Input is not case sensitive.";
-    return declaration;
+    return OTHER;
   }
 
   if (playerSelection === computerSelection) {
-    declaration = `It's a Tie! You both chose ${playerSelection}`;
+    return TIE;
   } else if (
     (playerSelection === "Rock" && computerSelection === "Scissors") ||
     (playerSelection === "Scissors" && computerSelection === "Paper") ||
     (playerSelection === "Paper" && computerSelection === "Rock")
   ) {
-    declaration = `You Win! ${playerSelection} beats ${computerSelection}`;
-  } else {
-    declaration = `You Lose! ${computerSelection} beats ${playerSelection}`;
-  }
-
-  return declaration;
-}
-
-function assessResult(result) {
-  let splitResult = result.split("!");
-  if (splitResult[0] === "You Win") {
     return WIN;
-  } else if (splitResult[0] === "You Lose") {
-    return LOSE;
-  } else if (splitResult[0] === "It's a Tie") {
-    return TIE;
   } else {
-    return 3;
+    return LOSE;
   }
 }
+
+function generateResultString(result, playerSelection, computerSelection) {
+  let resultString = "";
+  if (result === WIN) {
+    resultString = `You Win! ${playerSelection} beats ${computerSelection}`;
+  } else if (result === LOSE) {
+    resultString = `You Lose! ${computerSelection} beats ${playerSelection}`;
+  } else if (result === TIE) {
+    resultString = `It's a Tie! You both chose ${playerSelection}`;
+  } else {
+    resultString =
+      "Bad input! Please enter either 'Rock', 'Paper', or 'Scissors'. Input is not case sensitive.";
+  }
+
+  return resultString;
+}
+
 function updateScores() {
   const winsCounter = document.querySelector(".win-score");
   const lossesCounter = document.querySelector(".lose-score");
@@ -122,90 +126,78 @@ function updateScores() {
   tiesCounter.textContent = ties;
 
   if (wins === maxWins || losses === maxWins) {
-    console.log("game over");
-    const playerChoices = document.querySelectorAll(
-      ".button-container div button"
-    );
-    playerChoices.forEach((button) =>
-    button.removeEventListener("click", startRound)
-    );
+    gameOver();
   }
-
-  // if (winsCounter.textContent === 5 || lossesCounter.textContent === 5) {
-  //   const playerChoices = document.querySelectorAll(
-  //     ".button-container div button"
-  //   );
-  //   playerChoices.forEach((button) =>
-  //     button.removeEventListener("click", () => playRound(button.textContent))
-  //   );
-  // }
 }
 
-function resetGame() {
+function resetText() {
+  const roundResults2 = document.querySelector(".results p");
+  roundResults2.textContent = "Rock, paper, or scissors...";
+}
+
+function resetImages() {
   const playerImgDiv = document.querySelector(
     ".your-choice-container .choice-img"
   );
   const compImgDiv = document.querySelector(
     ".comp-choice-container .choice-img"
   );
-  const roundResults = document.querySelector(".round-results p");
+  setImg(playerImgDiv, "question");
+  setImg(compImgDiv, "question");
+}
 
+function addButtonEvents() {
   const playerChoices = document.querySelectorAll(
-    ".button-container div button"
-  );
-  playerChoices.forEach((button) =>
-    button.addEventListener("click", startRound)
+    ".button-container > div"
   );
 
-  wins = 0;
-  losses = 0;
-  ties = 0;
-
-  updateScores();
-
-  setImg(playerImgDiv, "question-img");
-  setImg(compImgDiv, "question-img");
-
-  roundResults.textContent = "Rock, paper, or scissors... choose wisely";
+  playerChoices.forEach((button) => {
+    button.addEventListener("click", startRound);
+  });
 }
 
 const startRound = function (e) {
-  playRound(e.target.textContent);
+  playRound(this.lastElementChild.textContent);
 };
 
-function initiateGame() {
-  const rock = document.querySelector(".rock-button");
-  const paper = document.querySelector(".paper-button");
-  const scissors = document.querySelector(".scissors-button");
+function clearButtonEvents() {
+  const playerChoices = document.querySelectorAll(
+    ".button-container > div"
+  );
 
-  resetGame();
-
-
-
-  return;
-
-  console.log(result);
-  console.log(`Wins: ${wins}, Losses: ${losses}, Ties: ${ties}`);
-
-  if (wins > losses) {
-    console.log("You Win the 5 round game! Congratulations");
-  } else if (wins < losses) {
-    console.log("You Lose the 5 round game! Maybe next time");
-  } else {
-    console.log("You finish the 5 round game with a tie...");
-  }
+  playerChoices.forEach((button) => {
+    button.removeEventListener("click", startRound);
+  });
 }
 
-function testGameOver(e) {
-  console.log("what");
-  console.log(e);
+function gameOver() {
+  const finalMessage = document.querySelector(".results p");
+  let message = "";
+  if (wins === 5)
+    message = `Success! You've defeated the computer, ${wins} - ${losses}`;
+  else if (losses === 5)
+    message = `Game Over! The computer beat you ${wins} - ${losses}`;
+  finalMessage.textContent = message;
+
+  clearButtonEvents();
+}
+
+function initiateGame() {
+  wins = 0;
+  losses = 0;
+  ties = 0;
+  updateScores();
+  resetText();
+  resetImages();
+  clearButtonEvents();
+
+  addButtonEvents();
 }
 
 let wins, losses, ties;
 const maxWins = 5;
 
 const playAgain = document.querySelector(".play-again button");
-
-playAgain.addEventListener("click", () => resetGame());
+playAgain.addEventListener("click", () => initiateGame());
 
 initiateGame();

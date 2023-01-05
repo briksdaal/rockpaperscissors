@@ -20,7 +20,10 @@ body {
 
 h1,
 h2,
-h3,
+h3 {
+  margin-bottom: 16px;
+}
+
 p {
   margin: 0;
 }
@@ -34,13 +37,59 @@ h1 {
 }
 
 .score {
-  display: flex;
-  justify-content: space-evenly;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 8px 0;
+    border-radius: 15px 15px 0 0;
+    border: 2px solid #2f4858;
+    margin: 0 auto;
+    align-items: center;
+    border-bottom: none;
+    max-width: 760px;
+    height: 40px;
+    background-color: #c6ffbc;
 }
 
 .active-round {
-  display: flex;
-  justify-content: space-evenly;
+    display: flex;
+    justify-content: space-evenly;
+    max-width: 760px;
+    background-color: #c6ffbc;
+    border: 2px solid #2f4858;
+    margin: 0 auto;
+}
+.your-choice-container, .comp-choice-container {
+    padding: 32px 0;
+}
+
+.mid-container {
+    width: 2px;
+    background-color: #2f4858;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    border: 2px solid #2f4858;
+    border-radius: 50%;
+}
+
+.results {
+    max-width: 760px;
+    margin: 0 auto 16px;
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    align-items: center;
+    padding: 8px 0;
+    border: 2px solid #2f4858;
+    background-color: #c6ffbc;
+    border-radius: 0 0 15px 15px;
+    border-top: none;
 }
 
 .player-choices {
@@ -86,10 +135,9 @@ h1 {
 }
 
 .testimonial {
-    flex: 1;
-  }
-  .testimonial-content {
-    font-style: italic;
-    font-size: 18px;
-  }
-    
+  flex: 1;
+}
+.testimonial-content {
+  font-style: italic;
+  font-size: 18px;
+}
