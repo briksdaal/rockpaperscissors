@@ -40,13 +40,13 @@ function playRound(playerSelection) {
   )
     playerSelection = "???";
 
+  setImages(playerSelection, computerSelection);
+
   const yourChoice = document.querySelector(".your-choice");
   const compChoice = document.querySelector(".comp-choice");
   const roundResults = document.querySelector(".results p");
   yourChoice.textContent = playerSelection;
   compChoice.textContent = computerSelection;
-  setImg(yourChoice.previousElementSibling, playerSelection);
-  setImg(compChoice.previousElementSibling, computerSelection);
 
   const result = assessResult(playerSelection, computerSelection);
   const resultString = generateResultString(
@@ -137,15 +137,18 @@ function resetText() {
   playAgain.classList.remove("hover-like-breath");
 }
 
-function resetImages() {
+function setImages(playerSelection, computerSelection) {
   const playerImgDiv = document.querySelector(
     ".your-choice-container .choice-img"
   );
   const compImgDiv = document.querySelector(
     ".comp-choice-container .choice-img"
   );
-  setImg(playerImgDiv, "question");
-  setImg(compImgDiv, "question");
+  if (!playerSelection) playerSelection = "???";
+
+  if (!computerSelection) computerSelection = "???";
+  setImg(playerImgDiv, playerSelection);
+  setImg(compImgDiv, computerSelection);
 }
 
 function addButtonEvents() {
@@ -202,7 +205,7 @@ function initiateGame() {
   ties = 0;
   updateScores();
   resetText();
-  resetImages();
+  setImages();
   clearButtonEvents();
 
   // start round on button clicks
