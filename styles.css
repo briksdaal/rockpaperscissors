@@ -8,8 +8,12 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 0;
-  padding: 16px;
+  padding: 0;
   background-color: #fdfdfd;
   height: 100vh;
   box-sizing: border-box;
@@ -17,8 +21,9 @@ body {
 
 .main {
   display: flex;
+  padding: 16px 16px 0 16px;
   width: 1140px;
-  height: 100%;
+  flex: 1;
   flex-direction: column;
   margin: 0 auto;
 }
@@ -215,8 +220,31 @@ p {
 .testimonial {
   flex: 1;
 }
+
 .testimonial-content {
   font-style: italic;
   font-size: 18px;
   margin: 0 0 8px 0;
+}
+
+.footer {
+  font-size: 14px;
+  padding: 6px 0;
+  background-color: #2f4858;
+  color: #fff;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.footer p {
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.footer a {
+  text-decoration: none;
+}
+
+i {
+  color: #fff;
 }
